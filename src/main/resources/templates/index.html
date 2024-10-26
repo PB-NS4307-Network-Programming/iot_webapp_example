@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<script th:src="@{ /css/tailwind.css }"></script>
+	</head>
+	<body>
+		<div th:if="${sensorState} == null">
+			Nada Sensor.
+		</div>
+		<div th:if="${sensorState} != null" class="flex flex-col">
+			<p class="bg-gray-300">LINKS</p>
+			<a th:href="@{ /sensor/redLedOff }" th:if="${sensorState.redLed == true}">Turn RED LED Off</a>
+			<a th:href="@{ /sensor/redLedOn }" th:if="${sensorState.redLed == false}">Turn RED LED On</a>
+			<a th:href="@{ /sensor/yellowLedOff }" th:if="${sensorState.yellowLed == true}">Turn Yellow LED Off</a>
+			<a th:href="@{ /sensor/yellowLedOn }" th:if="${sensorState.yellowLed == false}">Turn Yellow LED On</a>
+			<a th:href="@{ /sensor/greenLedOff }" th:if="${sensorState.greenLed == true}">Turn Green LED Off</a>
+			<a th:href="@{ /sensor/greenLedOn }" th:if="${sensorState.greenLed == false}">Turn Green LED On</a>
+			<a th:href="@{ /sensor/playMelody }">Play Melody</a>
+			<a th:href="@{ /sensor/stopMelody }">Stop Melody</a>
+			<a th:href="@{ /sensor/toggleServoClose }" th:if="${sensorState.servoOpen == true}">Close Servo</a>
+			<a th:href="@{ /sensor/toggleServoOpen }" th:if="${sensorState.servoOpen == false}">Open Servo</a>
+			<p class="bg-gray-300">INFO</p>
+			<p th:if="${sensorState.soundDetected} == true">Sound Detected</p>
+			<p th:if="${sensorState.soundDetected} == false">Sound Not Detected</p>
+			<p th:if="${sensorState.motionDetected} == true">Motion Detected</p>
+			<p th:if="${sensorState.motionDetected} == false">Motion Not Detected</p>
+		</div>
+		<div class="flex flex-col">	
+			<p class="bg-gray-300">TEMPERATURE</p>		
+			<div class="flex flex-row" th:each="temp : ${tempData}">
+				<span th:text="${temp.temp}" class="px-2"></span>
+				<span th:text="${temp.humid}" class="px-2"></span>
+				<span th:text="${temp.timestamp}" class="px-2"></span>
+			</div>
+		</div>
+		<div>
+			<form action="/antah" method="POST">				
+				<input name="msg" />
+				<input name="cakap" />
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+	</body>
+</html>
